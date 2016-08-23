@@ -9,8 +9,20 @@ var loop = function(collection, callback){
 };
 
 // 1. countVowels
+var countVowels = function(string) {
+	var counter = 0;
+	loop(string, function(index){
+		if(index === "a" || index === "e" || index === "i" || index === "o" || index === "u"){
+			counter = counter + 1
+		}
+	})
+	return counter;
+};
+
+// console.log(countVowels("capitalizeFirstLetters"));
 
 // 2. stringReversal
+
 
 // 3. isPalindrome
 
