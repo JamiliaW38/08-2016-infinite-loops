@@ -129,10 +129,10 @@ var collectValues = function(object){
 	return results;
 };
 
-// var obj = {};
-// 	obj.name = 'Albrey';
-// 	obj.favoriteMovie = 'Inception';
-// 	obj.favoriteColor = 'Blue';
+var obj = {};
+	obj.name = 'Albrey';
+	obj.favoriteMovie = 'Inception';
+	obj.favoriteColor = 'Blue';
 // console.log("Testing collectValues. We should expect [\"Albrey\", \"Inception\", \"Blue\"]:", collectValues(obj));
 
 // 9. containsValue 
@@ -149,31 +149,161 @@ var containsValue = function(object, targetValue){
 // console.log("Testing containsValue. We expect true:", containsValue(obj, "Blue"));
 // console.log("Testing containsValue. We expect false:", containsValue(obj, "Red"));
 
-// 10. copyObj 
+var loop = function(collection, callback){
 
+  if (Array.isArray(collection)){
+    for (var i = 0; i < collection.length; i++){
+      callback(collection[i], i);
+    }
+  } else if (typeof collection === 'object'){
+    for (var key in collection){
+      callback(collection[key], key);
+    }
+  }
+};
+
+// 10. copyObj 
+var copyObj = function(obj){
+	var newObj = {};
+	loop(obj, function(value, key){
+		newObj[key] = value; // use bracket notation, key acts like a variable.
+	})						 // dot notation will create a prop named key and overwrite its' value after each iteration
+	return newObj;
+};
+
+
+// console.log("Testing copyObj. We expect a carbon copy of Obj:", copyObj(obj));
 
 // 11. extendObj 
+var extendObj = function(obj1, obj2){
+	loop(obj2, function(value, key){
+		// console.log(value, key);
+		obj1[key] = value;
+	})
+	return obj1;
+}
 
+var myObjOne = {};
+	myObjOne.name = "Nathan";
+	myObjOne.age = "25";
+
+var myObjTwo = {};
+	myObjTwo.favoriteColor = "Blue";
+	myObjTwo.hungry = false;
+
+// console.log("Testing extendObj. We expect obj2's props/values to be merged with obj1's:", extendObj(myObjOne, myObjTwo));
+// console.log(myObjOne)
 
 // 12. swapShuffle 
 
+/*
+ var swapShuffle = function(array){
+	// does not make a new array
+	loop(array, function(element, index){
 
+	})
+	return array;
+};
+
+var myArray = [30, 11, 35, "A", "Z", [], {}, true, false];
+
+console.log("Testing swapShuffle. We expect array to be shuffled:", swapShuffle(myArray));
+*/
 
 var sampleCarList = helpers.carFactory(helpers.carDatabase, helpers.carMaker, 100);
 console.dir(sampleCarList);
 
 
 // 13. findBlueCars
+var findBlueCars = function(carList){
+	var allBlueCars = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			if(value === "blue"){
+				allBlueCars.push(element);
+			}
+		})
+	})	
+	return allBlueCars;
+};
+
+// console.log(findBlueCars(sampleCarList));
 
 // 14. findCarsByColor
+var findCarsByColor = function(carList, color){
+	var allCarsByColor = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			if(value === color){
+				allCarsByColor.push(element);
+			}
+		})
+	})	
+	return allCarsByColor;
+};
+
+// console.log(findCarsByColor(sampleCarList, "red"));
 
 // 15. findCarsByYear
+var findCarsByYear = function(carList, year){
+	var allCarsByYear = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			if(value === year){
+				allCarsByYear.push(element);
+			}
+		})
+	})	
+	return allCarsByYear;
+};
+
+// console.log(findCarsByYear(sampleCarList, 2002));
 
 // 16. findCarsBetweenYears
+var findCarsBetweenYears = function(carList, startYear, endYear){
+	var allCarsBetweenYears = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			if(value >= startYear && value <= endYear){
+				allCarsBetweenYears.push(element);
+			}
+		})
+	})	
+	return allCarsBetweenYears;
+};
+
+// console.log(findCarsBetweenYears(sampleCarList, 2002, 2003));
 
 // 17. findCarsByMake
+var findCarsByMake = function(carList, make){
+	var allCarsByMake = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			if(value === make){
+				allCarsByMake.push(element);
+			}
+		})
+	})	
+	return allCarsByMake;
+};
+
+// console.log(findCarsByMake(sampleCarList, "BMW"));
 
 // 18. findCarsByMakeAndModel
+var findCarsByMakeAndModel = function(carList, make, model){
+	var allCarsByMakeAndModel = [];
+	loop(carList, function(element, index){
+		loop(element, function(value, key){
+			console.log("testing value:", value);
+			if(value === make && value === model){
+				allCarsByMakeAndModel.push(element);
+			}
+		})
+	})	
+	return allCarsByMakeAndModel;
+};
+
+console.log(findCarsByMakeAndModel(sampleCarList, "BMW", "3 Series"));
 
 // 19. Random Price Generator
 
