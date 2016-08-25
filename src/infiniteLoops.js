@@ -8,6 +8,23 @@ var loop = function(collection, callback){
     }
 };
 
+// 0. countLetter
+// take in a string and a letter, and count how many times that letter appears in the string!
+
+var countLetter = function(string, letter){
+	var counter = 0; 
+	//created within the function because it will reset when you call the function
+	//counter, if not declared and used, will have global scope and retain its value
+	loop(string, function(index){
+		if(index === letter){
+			counter++;
+		}
+	})
+	return counter;
+}
+
+console.log("Testing countLetter. We expect: 6",countLetter("heeeleleoe", "e"));
+
 // 1. countVowels
 var countVowels = function(string){
 	var counter = 0;
@@ -20,7 +37,7 @@ var countVowels = function(string){
 	return counter;
 };
 
-// console.log("Testing countVowels. We expect nine vowels:", countVowels("axexixoxuxaxexixox"));
+console.log("Testing countVowels. We expect nine vowels:", countVowels("axexixoxuxaxexixox"));
 
 // 2. stringReversal
 var stringReversal = function(string){
@@ -196,11 +213,14 @@ var myObjTwo = {};
 
 // 12. swapShuffle 
 
-/*
+
  var swapShuffle = function(array){
 	// does not make a new array
+	var temp = 0;
 	loop(array, function(element, index){
-
+		temp = element;
+		element = array[Math.floor(Math.random() * index)]
+		array[Math.floor(Math.random() * index)] = temp;
 	})
 	return array;
 };
@@ -208,7 +228,7 @@ var myObjTwo = {};
 var myArray = [30, 11, 35, "A", "Z", [], {}, true, false];
 
 console.log("Testing swapShuffle. We expect array to be shuffled:", swapShuffle(myArray));
-*/
+
 
 var sampleCarList = helpers.carFactory(helpers.carDatabase, helpers.carMaker, 100);
 console.dir(sampleCarList);
@@ -293,17 +313,17 @@ var findCarsByMake = function(carList, make){
 var findCarsByMakeAndModel = function(carList, make, model){
 	var allCarsByMakeAndModel = [];
 	loop(carList, function(element, index){
-		loop(element, function(value, key){
-			console.log("testing value:", value);
-			if(value === make && value === model){
-				allCarsByMakeAndModel.push(element);
-			}
-		})
-	})	
+		if(element.make === make && element.model === model) {
+			allCarsByMakeAndModel.push(element);
+		}
+	})
 	return allCarsByMakeAndModel;
 };
 
+
 console.log(findCarsByMakeAndModel(sampleCarList, "BMW", "3 Series"));
+
+// EC
 
 // 19. Random Price Generator
 
